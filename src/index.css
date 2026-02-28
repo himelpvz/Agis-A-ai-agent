@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  
+  --color-terminal-bg: #f5f5f7;
+  --color-terminal-text: #1d1d1f;
+  --color-terminal-dim: #86868b;
+  --color-terminal-accent: #0071e3;
+  
+  --radius-premium: 0.75rem;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-[#1d1d1f] font-sans selection:bg-blue-500/30 selection:text-current antialiased;
+  }
+}
+
+@utility glass-panel {
+  @apply bg-white/80 backdrop-blur-2xl border border-gray-100 shadow-[0_8px_32px_rgba(0,0,0,0.05)];
+}
+
+@utility premium-card {
+  @apply bg-white rounded-xl p-6 border border-gray-200/50 shadow-sm transition-all duration-300 hover:shadow-md hover:border-blue-500/20;
+}
+
+@utility terminal-input {
+  @apply bg-white border border-gray-200 rounded-[6px] px-4 py-2.5 text-gray-900 shadow-sm transition-all duration-200;
+  @apply focus:outline-none focus:border-blue-500 focus:ring-[3px] focus:ring-blue-500/15;
+  @apply placeholder:text-gray-400 text-sm;
+}
+
+@utility scrollbar-hide {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.terminal-glow {
+  text-shadow: none;
+}
+
+/* macOS Traffic Lights */
+.traffic-light {
+  @apply w-3 h-3 rounded-full;
+}
+.traffic-red { @apply bg-[#ff5f57] border border-[#e0443e]; }
+.traffic-yellow { @apply bg-[#febc2e] border border-[#d8a028]; }
+.traffic-green { @apply bg-[#28c840] border border-[#1aab29]; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+}
