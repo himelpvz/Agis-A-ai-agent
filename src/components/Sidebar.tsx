@@ -1,6 +1,6 @@
-import React from 'react';
+import { FC } from 'react';
 import { Shield, CheckCircle2, Cpu } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { TabId, TABS, PHASES } from '../types';
 
 interface SidebarProps {
@@ -8,7 +8,7 @@ interface SidebarProps {
   setActiveTab: (tab: TabId) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
+export const Sidebar: FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   return (
     <aside className="hidden md:flex w-64 flex-col border-r border-gray-200/50 bg-[#ebebed]/80 backdrop-blur-xl p-6 gap-8 z-50">
       <div className="flex flex-col gap-6">

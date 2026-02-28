@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 import { BrainCircuit, Activity, CheckCircle2, AlertCircle } from 'lucide-react';
 import { TabId, SystemStatus } from '../types';
 
@@ -10,7 +10,7 @@ interface ReasoningPanelProps {
   onClose: () => void;
 }
 
-export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ activeTab, status, isOpen, onClose }) => {
+export const ReasoningPanel: FC<ReasoningPanelProps> = ({ activeTab, status, isOpen, onClose }) => {
   const objective = {
     terminal: 'Executing direct system commands and monitoring output streams for anomalies.',
     dashboard: 'Analyzing project health metrics and cross-referencing dependency governance protocols.',
@@ -77,7 +77,6 @@ export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ activeTab, statu
       </aside>
 
       {/* Mobile Drawer */}
-      <AnimatePresence>
         {isOpen && (
           <>
             <motion.div 
@@ -100,7 +99,6 @@ export const ReasoningPanel: React.FC<ReasoningPanelProps> = ({ activeTab, statu
             </motion.div>
           </>
         )}
-      </AnimatePresence>
     </>
   );
 };

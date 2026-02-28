@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 import { LineChart, CheckCircle2, Package, History, Target } from 'lucide-react';
 import { SystemStatus, AnalysisData } from '../types';
 
@@ -8,7 +8,7 @@ interface DashboardProps {
   analysis: AnalysisData | null;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ status, analysis }) => {
+export const Dashboard: FC<DashboardProps> = ({ status, analysis }) => {
   const stats = [
     { label: 'Coverage', value: `${status?.health.coverage}%`, icon: LineChart, color: 'text-emerald-500' },
     { label: 'Lint', value: `${status?.health.lintScore}`, icon: CheckCircle2, color: 'text-blue-500' },

@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 import { History, BrainCircuit } from 'lucide-react';
 import { AnalysisData } from '../types';
 
@@ -7,7 +7,7 @@ interface MemoryProps {
   analysis: AnalysisData | null;
 }
 
-export const Memory: React.FC<MemoryProps> = ({ analysis }) => {
+export const Memory: FC<MemoryProps> = ({ analysis }) => {
   return (
     <motion.div 
       initial={{ opacity: 0, x: 20 }} 

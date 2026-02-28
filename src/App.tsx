@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
+import { GoogleGenAI } from '@google/genai';
 import { 
   Shield, 
   Activity, 
@@ -39,7 +39,7 @@ export default function App() {
   }, [logs]);
 
   const clearLogs = () => {
-    const initialLog = { id: '1', type: 'info', message: 'Aegis System v1.2.0 Initializing...', timestamp: new Date().toLocaleTimeString() };
+    const initialLog: LogEntry = { id: '1', type: 'info', message: 'Aegis System v1.2.0 Initializing...', timestamp: new Date().toLocaleTimeString() };
     setLogs([initialLog]);
   };
   const [command, setCommand] = useState('');
@@ -80,26 +80,40 @@ export default function App() {
     }]);
   };
 
-  const handleCommand = async (e: React.FormEvent) => {
+  const [chatSession, setChatSession] = useState<any>(null);
+
+  useEffect(() => {
+    try {
+      if (process.env.GEMINI_API_KEY) {
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+        const chat = ai.chats.create({
+          model: "gemini-3-flash-preview",
+          config: {
+            systemInstruction: "You are Aegis, an advanced AI engineering agent. You help users build, debug, and manage their software projects. Keep your answers concise and helpful.",
+          },
+        });
+        setChatSession(chat);
+      }
+    } catch (e) {
+      console.error("Failed to initialize Gemini API", e);
+    }
+  }, []);
+
+  const handleCommand = async (e: FormEvent) => {
     e.preventDefault();
     if (!command.trim() || isExecuting) return;
 
     const cmd = command.trim();
     setCommand('');
-    addLog(`$ ${cmd}`, 'command');
+    addLog(cmd, 'command');
     setIsExecuting(true);
 
     try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: cmd })
-      });
-      const data = await response.json();
-      
-      const lines = data.output.split('\n');
-      for (const line of lines) {
-        if (line) addLog(line, 'info');
+      if (chatSession) {
+        const response = await chatSession.sendMessage({ message: cmd });
+        addLog(response.text || 'No response', 'info');
+      } else {
+        addLog('AI is not initialized. Check your API key.', 'error');
       }
     } catch (err) {
       addLog('Execution failed: Connection error', 'error');
@@ -146,7 +160,6 @@ export default function App() {
         </header>
 
         <div className="flex-1 overflow-hidden relative">
-          <AnimatePresence mode="wait">
             {activeTab === 'terminal' && (
               <Terminal 
                 key="terminal"
@@ -163,7 +176,6 @@ export default function App() {
             {activeTab === 'plan' && <Plan key="plan" />}
             {activeTab === 'security' && <Security key="security" />}
             {activeTab === 'memory' && <Memory key="memory" analysis={analysis} />}
-          </AnimatePresence>
         </div>
       </main>
 

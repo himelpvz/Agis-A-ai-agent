@@ -1,8 +1,8 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 import { Workflow, CheckCircle2 } from 'lucide-react';
 
-export const Plan: React.FC = () => {
+export const Plan: FC = () => {
   const tasks = [
     { title: 'Recon Phase', desc: 'Scan project structure and detect dependencies', status: 'done' },
     { title: 'Advanced UI Implementation', desc: 'Build multi-tab dashboard with real-time telemetry', status: 'active' },

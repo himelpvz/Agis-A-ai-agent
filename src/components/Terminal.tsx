@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import { FC, FormEvent, RefObject } from 'react';
+import { motion } from 'framer-motion';
 import { 
   Sparkles, 
   Mic, 
@@ -20,13 +20,13 @@ interface TerminalProps {
   logs: LogEntry[];
   command: string;
   setCommand: (cmd: string) => void;
-  onExecute: (e: React.FormEvent) => void;
+  onExecute: (e: FormEvent) => void;
   isExecuting: boolean;
-  scrollRef: React.RefObject<HTMLDivElement | null>;
+  scrollRef: RefObject<HTMLDivElement | null>;
   onClear: () => void;
 }
 
-export const Terminal: React.FC<TerminalProps> = ({ 
+export const Terminal: FC<TerminalProps> = ({ 
   logs, command, setCommand, onExecute, isExecuting, scrollRef, onClear 
 }) => {
   return (
@@ -77,7 +77,7 @@ export const Terminal: React.FC<TerminalProps> = ({
                   <span>Ran for {Math.floor(Math.random() * 300)}s</span>
                 </div>
 
-                <div className="text-sm text-gray-800 leading-relaxed">
+                <div className="text-sm text-gray-800 leading-relaxed prose prose-sm max-w-none">
                   {log.message}
                 </div>
 
@@ -162,7 +162,7 @@ export const Terminal: React.FC<TerminalProps> = ({
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                onExecute(e as unknown as React.FormEvent);
+                onExecute(e as unknown as FormEvent);
               }
             }}
           />

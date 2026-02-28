@@ -1,8 +1,8 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 import { Shield, CheckCircle2, History, Lock } from 'lucide-react';
 
-export const Security: React.FC = () => {
+export const Security: FC = () => {
   return (
     <motion.div 
       initial={{ opacity: 0 }} 
